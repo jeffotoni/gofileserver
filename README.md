@@ -18,6 +18,8 @@ Call authorization required, Upload, Download, register new user
 ---
 
 * [Install](#install)
+* [Structure](#structure)
+* [Run](#runprogram)
 * [Examples Client](#examples-client)
 * [Register User](#register-user)
 * [Upload File](#upload-files)
@@ -28,7 +30,80 @@ Call authorization required, Upload, Download, register new user
 With a [correctly configured](https://golang.org/doc/install#testing) Go toolchain:
 
 ```sh
+go get -u github.com/lib/pq
+go get -u gopkg.in/gcfg.v1
+go get -u github.com/aws/aws-sdk-go/aws
+go get -u github.com/aws/aws-sdk-go/service
+go get -u github.com/gorilla/mux
 go get -u github.com/jeffotoni/gofileserver
+```
+
+Configuring the environment to run sdk amazon API
+
+```sh
+mkdir ~/.aws/
+vim ~/.aws/config
+[default]
+region = us-east-1
+output = 
+
+vim ~/.aws/credentials
+[default]
+aws_access_key_id = Put your Id here
+aws_secret_access_key = Put your key 
+```
+
+Creating postgresql database
+
+```sh
+create database ukkobox -U postgres -O user -E UTF-8 -T template0
+psql ukkobox -U postgres -f tables/ukkobox.sql
+```
+
+Edit the configuration file
+
+```sh
+vim config/config.gcfg
+```
+
+## Structure of the program
+```go
+- gofileserver
+	- config
+		- config.go
+		- config.gcfg
+	- libs
+		- gcheck.go
+	- postgres
+		- connection
+			connection.go
+	- tables
+		ukkobox.sql
+	- uploads
+	- views
+		index.html
+
+	gofileserver.go
+	gofileupload.go
+	gofileremove.go
+```
+## Run the program
+
+```go
+go run gofileserver.go 
+
+Conect port : 4001
+Conect database:  ukkobox
+Database User:  ukkobox
+Instance /register
+Instance /token
+Instance /upload
+Instance /download
+
+```
+
+```go
+go build gofileserver.go 
 ```
 
 ## Examples client
@@ -45,4 +120,21 @@ Using Curl - Access token
 
 ```sh
 curl -X POST --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/token
+```
+
+Uploading with Authorization
+```sh
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+```
+
+Uploading with acesskey
+
+```sh
+curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+```
+
+Download only Authorization
+
+```sh
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:4001/download/nameFile.bz2
 ```
