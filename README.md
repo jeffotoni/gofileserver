@@ -83,15 +83,20 @@ vim config/config.gcfg
 	- views
 		index.html
 
-	Server for receiving and sending files	
-	gofileserver.go
-
-	Scans all local structure and sends the files to servers in the cloud: Cloud Google, Amazon, DigitalOcean
-	gofileupload.go
-
-	Scrolls the structure checks whether the files are safe in the cloud and removes the location
-	gofileremove.go
+	gofileserver.go	
+	Server to register users, receive and send files to the file server
 	
+
+	gofileupload.go
+	Scans all local structure and sends the files to servers in the 
+	cloud: Cloud Google, Amazon, DigitalOcean
+	
+
+	gofileremove.go
+	Scrolls the structure checks whether the files are safe in the 
+	cloud and removes the location
+	
+
 ```
 ## Run the program
 
