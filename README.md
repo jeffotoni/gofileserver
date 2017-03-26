@@ -41,8 +41,8 @@ Using Curl - Sending in json format
 curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/register
 ```
 
-Using Curl - Sending in form format
+Using Curl - Access token
 
 ```sh
-curl -X POST --data 'name=jefferson&email=yourmail@yes.com&password=342' http://localhost:4001/registe
+curl -X POST --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/token
 ```
