@@ -1,13 +1,35 @@
 # gofileserver
-Simple RESTFUL API demo server written on Go (golang) user Aws S3, postgresql
-Authorization and authentication with token
-Api designed to upload, download files to your local server and then download 
-to cloud servers, the first to be implemented was aws s3
-Call authorization required, Upload, Download, register new user
+The objective of this project is purely didactic, it is an attempt to solve the problem of competition and parallelism that the project will assume with uploading, reading and downloading files on disk and for the cloud.
 
-* It implements the `Upload files` interface so it is compatible with the standard `http.ServeMux`.
-* It Implements the Download files based on URL host
+Simple RESTFUL API demo server written in Go (golang) in order to solve problems of recording, uploading and downloading files to disk and the Amazon cloud using S3, Google Cloud or any other cloud service that you want to implement, using postgresql as Database and token authentication.
+The services of amazon s3 were first implemented.
 
+* [Gofileserver.go]
+
+This program is responsible for managing and controlling our APIS.
+
+The upload is done on the local server always, there is a configuration file to determine some features of the config.gcfg system.
+Everything is recorded in the database.
+Authentication for upload upload was done in 2 ways.
+
+The download checks if the file is local or if it has already been sent to the cloud, if it is still on the local server the system will download locally, otherwise it checks on which cloud server it is to download from the cloud.
+
+The register and token is responsible for creating users and receiving the access token, and also with the possibility to view the tokem with username and password.
+
+
+* [Gofileupload.go]
+
+This program is responsible for downloading the files that are found on the local server to the cloud, the system evaluates the availability and uploads to the cloud.
+
+It is not deleted files locally, they are deleted in a second time for security, they are checked if it really is in the cloud before physically removes them.
+
+* [Gofileremove.go]
+
+This program is responsible for monitoring the files on disk so they can be removed, it checks in the cloud if the object is actually there, and if it does remove it from the disk physically.
+
+* [Goserversite.go]
+
+This program is just an attempt to create an interface to simulate what the client will see how the files on our platform are.
 
 ## Used libraries:
 - https://github.com/lib/pq - Sql Database.
