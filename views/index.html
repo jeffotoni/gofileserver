@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login</title>
+
+    <!-- CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/sb-admin-2.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><strong>Golang serving static site</strong> / Login</a>
+            </div>
+            <!-- /.navbar-header -->
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header text-center" id="title_name">Login</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <input type="hidden" style="position: absolute; visibility: hidden" id="type_form" name="type_form" data-type="index" />
+            <div class="row">
+                <div class="col-md-6" id="login">
+                    <form role="form">
+                        <!--- Login -->
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon" id="sizing-addon1">
+                                <i class="fa fa-envelope-o mod-icon" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" name="" id="" placeholder="E-mail" autocomplete="off" class="form-control" />
+                        </div>
+
+                        <!--- Senha -->
+                        <div class="input-group input-group-lg" style="margin: 15px 0 5px;">
+                            <span class="input-group-addon" id="sizing-addon2">
+                                <i class="fa fa-lock mod-icon ml3 mr3" style="margin: 0 3px;" aria-hidden="true"></i>
+                            </span>
+                            <input type="password" class="form-control" name="" id="" placeholder="Password" autocomplete="off" / />
+                        </div>
+
+                        <!--- Manter conectado / Esqueci minha senha -->
+                        <div class="form-group" style="margin: 5px 0 0;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label class="" for="verso_manter_connect_popup">
+                                        <input name="verso_manter_connect_popup" id="verso_manter_connect_popup" class="verso_manter_connect_popup" value="" type="checkbox" checked="checked" />
+                                        Remember me
+                                    </label>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <a data-toggle="modal" data-dismiss="modal" data-target="#ModalForgotPassword" class="btn btn-link btn-xs"><i class="fa fa-unlock mr5"></i>Forgot password?</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--- Button Entrar -->
+                        <div class="form-group text-center">
+                            <a href="admin.html" style="text-decoration: none;">
+                                <button type="button" class="btn btn-block btn-success btn-lg">
+                                    <div class="text">Sign in &nbsp; <i class="fa fa-sign-in"></i></div>
+                                </button>
+                            </a>
+                        </div>
+
+                        <!--- Button Nova conta -->
+                        <div class="form-group text-center no-margin">
+                            <strong>Don't have an account?</strong>
+                            <a onclick="trocaFormularioLoginCadastro();" class="btn btn-info btn-block btn-lg" style="margin: 5px 0;"><i class="fa fa-user-plus"></i> &nbsp; Create new account</a> 
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6" id="cadastro" style="display: none;">
+                    <form role="form">
+                        <!--- Nome -->
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon" id="sizing-addon1">
+                                <i class="fa fa-user mod-icon" style="margin: 0 3px;" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" name="" id="" placeholder="Name" autocomplete="off" class="form-control" />
+                        </div>
+
+                        <!--- Login -->
+                        <div class="input-group input-group-lg" style="margin: 15px 0 5px;">
+                            <span class="input-group-addon" id="sizing-addon1">
+                                <i class="fa fa-envelope-o mod-icon" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" name="" id="" placeholder="E-mail" autocomplete="off" class="form-control" />
+                        </div>
+
+                        <!--- Senha -->
+                        <div class="input-group input-group-lg" style="margin: 15px 0 15px;">
+                            <span class="input-group-addon" id="sizing-addon2">
+                                <i class="fa fa-lock mod-icon ml3 mr3" style="margin: 0 3px;" aria-hidden="true"></i>
+                            </span>
+                            <input type="password" class="form-control" name="" id="" placeholder="Password" autocomplete="off" / />
+                        </div>
+
+                        <!--- Button Entrar -->
+                        <div class="form-group text-center">
+                            <a href="index.html" style="text-decoration: none;">
+                                <button type="button" class="btn btn-block btn-success btn-lg">
+                                    <div class="text"><i class="fa fa-user-plus" style="margin-right:10px;"></i> Create account</div>
+                                </button>
+                            </a>
+                        </div>
+
+                        <!--- Button Nova conta -->
+                        <div class="form-group text-center no-margin">
+                            <strong>Already have an account?</strong>
+                            <a onclick="trocaFormularioLoginCadastro();" class="btn btn-info btn-block btn-lg" style="margin: 5px 0;"><i class="fa fa-sign-in"></i> &nbsp; Sign in</a> 
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 col-md-offset-1">
+                    <h5 class="text-uppercase">Lorem ipsum dolor sit amet, consectetur adipisicing elit</h5>
+                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+                    <h5 class="text-uppercase">Consectetur adipisicing elit</h5>
+                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Javascript / JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="js/sb-admin-2.min.js"></script>
+
+    <script type="text/Javascript">
+        var trocaFormularioLoginCadastro = function () {
+            var view = $('#type_form').attr('data-type');
+
+            if (view == 'index') {
+                $('#type_form').attr('data-type', 'cadastro');
+
+                $('#login').hide();
+                $('#cadastro').show();
+                $('#title_name').html('Sign up');
+
+            } else {
+                $('#type_form').attr('data-type', 'index');
+
+                $('#cadastro').hide();
+                $('#login').show();
+                $('#title_name').html('Login');
+            }
+        }
+    </script>
+  </body>
+</html>

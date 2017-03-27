@@ -149,6 +149,54 @@ Instance /download
 go build gofileserver.go 
 ```
 
+Body of main function
+
+```go
+func main() {
+
+	//config global
+
+	cfg := sfconfig.GetConfig()
+
+	fmt.Println("Conect port : 4001")
+	fmt.Println("Conect database: ", cfg.Section.Database)
+	fmt.Println("Database User: ", cfg.Section.User)
+
+	fmt.Println("Instance /register")
+	fmt.Println("Instance /token")
+	fmt.Println("Instance /upload")
+	fmt.Println("Instance /download")
+
+	///create route
+
+	router := mux.NewRouter()
+
+	router.Handle("/", http.FileServer(http.Dir("dirmsg")))
+
+	router.
+		HandleFunc("/register", RegisterUserJson).
+		Methods("POST")
+
+	router.
+		HandleFunc("/token", GetTokenUser).
+		Methods("POST")
+
+	router.
+		Path("/upload").
+		HandlerFunc(UploadFileEasy).
+		Methods("POST")
+
+	router.
+		Path("/download/{name}").
+		HandlerFunc(DownloadFile).
+		Methods("GET")
+
+	//After 5 minutes synchronize file upload
+	log.Fatal(http.ListenAndServe(":4001", router))
+
+}
+```
+
 ## Examples client
 
 Register user and receive access key 
@@ -181,6 +229,3 @@ Download only Authorization
 ```sh
 curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:4001/download/nameFile.bz2
 ```
-
-
-

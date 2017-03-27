@@ -1,0 +1,134 @@
+
+body {
+	background-color: #F8F8F8;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+}
+
+h5 {
+	color: #212121;
+	font-weight: bold;
+}
+
+.mr5 { margin-right: 5px; }
+
+label {
+	font-weight: normal;
+}
+
+.nav#side-menu > li > a {
+    font-size: 18px;
+    color: #424242;
+
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out; 
+    transition: all 0.15s ease-in-out;
+}
+
+.nav#side-menu > li > a:hover {
+	color: #2ecc71;
+}
+
+.table-files > tbody > tr > td {
+	vertical-align: middle;
+}
+
+.user-section {
+	line-height: 1.5;
+}
+
+.user-avatar {
+	border-radius: 50%;
+	-webkit-box-shadow: 0 0px 3px 1px rgba(0, 0, 0, .2);
+	box-shadow: 0 0px 3px 1px rgba(0, 0, 0, .2);
+	width: 80px;
+	height: 80px;
+	margin: 30px auto;
+	overflow: hidden;
+}
+
+.user-avatar img {
+	width: 100%;
+	height: 100%;	
+}
+
+.user-info {
+	margin: 0 0 15px;
+	text-align: center;
+}
+
+.user-info .user-name {
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+}
+
+.user-info .user-email {
+	font-size: 13px;
+	font-weight: lighter;
+	color: #424242;
+}
+
+.user-access-key {
+	color: #2ecc71;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.user-access-key-name {
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 13px;
+	display: block;
+	color: #424242;
+}
+
+.user-member-since {
+	font-weight: lighter;
+	font-size: 13px;
+	text-align: center;
+	color: #424242;
+	margin-bottom: 30px;
+}
+
+.user-member-since .user-member-since-text {
+	font-weight: normal;
+	font-size: 14px;
+	display: block;
+	color: #000;
+}
+
+.user-access-key-md5 {
+	text-align: center;
+	font-style: italic;
+	font-size: 12px;
+	color: #787878;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.sidebar ul li {
+	border: 0 none;
+}
+
+.navbar-default {
+	border-color: transparent;
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+}
+
+@media (min-width: 768px) {
+	.sidebar {
+	    margin-top: 53px;
+	}
+}
+
+#page-wrapper {
+	border: 0 none;
+	min-height: 620px;
+}
+
+.no-box-shadow {
+	box-shadow: none;
+}
