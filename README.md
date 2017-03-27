@@ -168,55 +168,106 @@ go build gofileserver.go
 Body of main function
 
 ```go
+
 func main() {
 
 	//config global
 
 	cfg := sfconfig.GetConfig()
 
-	fmt.Println("Conect port : 80")
-	fmt.Println("Conect database: ", cfg.Section.Database)
+	fmt.Println("Server listening port : ", cfg.Section.ServerPort)
+	fmt.Println("Database", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
-	fmt.Println("Instance /register")
-	fmt.Println("Instance /token")
-	fmt.Println("Instance /upload")
-	fmt.Println("Instance /download")
+	fmt.Println("Instance POST /register")
+	fmt.Println("Instance GET /token")
+	fmt.Println("Instance POST /upload")
+	fmt.Println("Instance GET /download")
 
 	///create route
+	router := mux.NewRouter().StrictSlash(true)
 
-	router := mux.NewRouter()
-
-	router.Handle("/", http.FileServer(http.Dir("dirmsg")))
-
-	router.
-		HandleFunc("/register", RegisterUserJson).
-		Methods("POST")
+	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
 
 	router.
-		HandleFunc("/token", GetTokenUser).
-		Methods("POST")
+		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" {
+
+				gofslib.RegisterUserJson(w, r)
+
+			} else if r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
 
 	router.
-		Path("/upload").
-		HandlerFunc(UploadFileEasy).
-		Methods("POST")
+		HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" {
+
+				//gofslib.GetTokenUser(w, r)
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
+
+			} else if r.Method == "GET" {
+
+				gofslib.GetTokenUser(w, r)
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
 
 	router.
-		Path("/download/{name}").
-		HandlerFunc(DownloadFile).
-		Methods("GET")
+		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 
-	//After 5 minutes synchronize file upload
-	//After 10 minutes synchronize file remove
+			if r.Method == "POST" {
+
+				gofslib.UploadFileEasy(w, r)
+
+			} else if r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+
+	router.
+		HandleFunc("/download/{name}", func(w http.ResponseWriter, r *http.Request) {
+
+			pathFileLocal := "../msg/error-download.txt"
+
+			if r.Method == "GET" {
+
+				gofslib.DownloadFile(w, r)
+
+			} else if r.Method == "GET" {
+
+				http.ServeFile(w, r, pathFileLocal)
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+			} else {
+
+				http.ServeFile(w, r, pathFileLocal)
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+			}
+		})
 
 	// port in config.gcfg
 
-	port := cfg.Section.ServerPort
-
-	log.Fatal(http.ListenAndServe(port, router))
-
+	log.Fatal(http.ListenAndServe(":"+cfg.Section.ServerPort, router))
 }
+
 ```
 
 ## Examples client
@@ -232,7 +283,7 @@ curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -
 Using Curl - Access token
 
 ```
-curl -X POST --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/token
+curl -X GET --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/token
 ```
 
 Uploading with Authorization
