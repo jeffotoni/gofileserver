@@ -53,7 +53,7 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.Handle("/", http.FileServer(http.Dir("dirmsg")))
+	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
 
 	router.
 		HandleFunc("/register", gofslib.RegisterUserJson).

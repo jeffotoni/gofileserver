@@ -35,7 +35,7 @@ func main() {
 
 	// Opening an instance to serve the dynamic site, the project interface
 
-	fs := http.FileServer(http.Dir("views"))
+	fs := http.FileServer(http.Dir("../views"))
 	http.Handle("/", fs)
 
 	log.Println("Listening 8080 site...")
