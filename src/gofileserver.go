@@ -74,6 +74,9 @@ func main() {
 		Methods("GET")
 
 	//After 5 minutes synchronize file upload
-	log.Fatal(http.ListenAndServe(":4001", router))
+	
+	// port 80
+
+	log.Fatal(http.ListenAndServe(":80", router))
 
 }
