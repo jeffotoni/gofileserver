@@ -40,7 +40,7 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
-	fmt.Println("Conect port : 4001")
+	fmt.Println("Conect port : 80")
 	fmt.Println("Conect database: ", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
