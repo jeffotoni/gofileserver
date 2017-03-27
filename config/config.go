@@ -38,6 +38,7 @@ type Config struct {
 		Ping       string
 		Bucket     string
 		PathLocal  string
+		ServerPort string
 	}
 }
 

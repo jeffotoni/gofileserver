@@ -40,7 +40,7 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
-	fmt.Println("Conect port : 80")
+	fmt.Println("Conect port : ", cfg.Section.ServerPort)
 	fmt.Println("Conect database: ", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
@@ -74,9 +74,12 @@ func main() {
 		Methods("GET")
 
 	//After 5 minutes synchronize file upload
-	
-	// port 80
+	//After 10 minutes synchronize file remove
 
-	log.Fatal(http.ListenAndServe(":80", router))
+	// port in config.gcfg
+
+	port := cfg.Section.ServerPort
+
+	log.Fatal(http.ListenAndServe(port, router))
 
 }
