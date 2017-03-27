@@ -229,10 +229,6 @@ Using Curl - Sending in json format
 curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/register
 ```
 
-```
-curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/register
-```
-
 Using Curl - Access token
 
 ```
