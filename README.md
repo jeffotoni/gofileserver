@@ -91,21 +91,36 @@ psql ukkobox -U postgres -f tables/ukkobox.sql
 
 Edit the configuration file
 
-```sh
+```
 vim config/config.gcfg
 ```
 
+Crontab edit the configuration / crontab -e
+```
+*/5 * * * * cd /pathprojeto/gofileserver/src && go run gofileupload.go >> /pathprojeto/gofileserver/src/gofileupload.log
+
+*/10 * * * * cd /pathprojeto/gofileserver/src && go run gofileremove.go >> /pathprojeto/gofileserver/src/gofileremove.log
+
+```
+
 ## Structure of the program
+
 ```go
 - gofileserver
+	- bin 
 	- config
 		- config.go
 		- config.gcfg
-	- libs
-		- gcheck.go
-	- postgres
-		- connection
-			connection.go
+	- dirmsg
+		welcome.html
+	- pkg	
+		- fcrypt
+		- gcheck
+		- gofrlib
+		- gofslib
+		- gofuplib
+		- postgres
+			- connection
 	- tables
 		ukkobox.sql
 	- uploads
@@ -130,12 +145,13 @@ vim config/config.gcfg
 	their uploaded as an online bucket
 	
 ```
+
 ## Run the program
 
 ```go
 go run gofileserver.go 
 
-Conect port : 4001
+Conect port : 80
 Conect database:  ukkobox
 Database User:  ukkobox
 Instance /register
@@ -158,7 +174,7 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
-	fmt.Println("Conect port : 4001")
+	fmt.Println("Conect port : 80")
 	fmt.Println("Conect database: ", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
@@ -192,7 +208,13 @@ func main() {
 		Methods("GET")
 
 	//After 5 minutes synchronize file upload
-	log.Fatal(http.ListenAndServe(":4001", router))
+	//After 10 minutes synchronize file remove
+
+	// port in config.gcfg
+
+	port := cfg.Section.ServerPort
+
+	log.Fatal(http.ListenAndServe(port, router))
 
 }
 ```
@@ -203,29 +225,34 @@ Register user and receive access key
 
 Using Curl - Sending in json format
 
-```sh
-curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/register
+```
+curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/register
+```
+
+```
+curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/register
 ```
 
 Using Curl - Access token
 
-```sh
-curl -X POST --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/token
+```
+curl -X POST --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/token
 ```
 
 Uploading with Authorization
-```sh
-curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+
+```
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:80/upload
 ```
 
 Uploading with acesskey
 
-```sh
-curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+```
+curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:80/upload
 ```
 
 Download only Authorization
 
-```sh
-curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:4001/download/nameFile.bz2
+```
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:80/download/nameFile.bz2
 ```
