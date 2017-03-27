@@ -27,7 +27,7 @@ Call authorization required, Upload, Download, register new user
 
 ## Install
 
-With a [correctly configured](https://golang.org/doc/install#testing) Go toolchain:
+With a [correctly configured](https://golang.org/doc/code.html#Workspaces) Go toolchain:
 
 ```sh
 go get -u github.com/lib/pq
@@ -38,18 +38,21 @@ go get -u github.com/jeffotoni/gofileserver
 ```
 
 Configuring the environment to run sdk amazon API
+[`SDK Examples`] (https://github.com/aws/aws-sdk-go/tree/master/example)
 
-```sh
+```
 mkdir ~/.aws/
 vim ~/.aws/config
+
 [default]
 region = us-east-1
 output = 
 
 vim ~/.aws/credentials
+
 [default]
-aws_access_key_id = Put your Id here
-aws_secret_access_key = Put your key 
+aws_access_key_id = AKIX1234567890
+aws_secret_access_key = MY-SECRET-KEY
 ```
 
 Creating postgresql database
@@ -98,7 +101,10 @@ vim config/config.gcfg
 	Scrolls the structure checks whether the files are safe in the 
 	cloud and removes the location
 	
-
+	goserversite.go
+	A template under construction so customers can manage, view, download 
+	their uploaded as an online bucket
+	
 ```
 ## Run the program
 
