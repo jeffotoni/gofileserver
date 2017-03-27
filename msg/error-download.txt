@@ -1,0 +1,11 @@
+/*
+* @about 	project gofileserver / server-upload / donwload / register user
+* @autor 	jeffotoni
+* @date 	25/03/2017
+* @since    Version 0.1
+*/
+
+Error the method has to be GET to download the files!
+
+Example: 
+curl -X PUT -H 'Authorization:8677924ffba12abc63b2acb6c3151d7c' -O http://localhost:4003/download/file2.pdf

@@ -220,6 +220,7 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 	cfg := sfconfig.GetConfig()
 
 	autorization := r.Header.Get("Authorization")
+
 	//fmt.Println("Token: ", autorization)
 
 	if autorization == "" {
