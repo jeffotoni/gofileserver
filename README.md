@@ -33,7 +33,6 @@ With a [correctly configured](https://golang.org/doc/install#testing) Go toolcha
 go get -u github.com/lib/pq
 go get -u gopkg.in/gcfg.v1
 go get -u github.com/aws/aws-sdk-go/aws
-go get -u github.com/aws/aws-sdk-go/service
 go get -u github.com/gorilla/mux
 go get -u github.com/jeffotoni/gofileserver
 ```
@@ -56,7 +55,10 @@ aws_secret_access_key = Put your key
 Creating postgresql database
 
 ```sh
-create database ukkobox -U postgres -O user -E UTF-8 -T template0
+createuser ukkobox -U postgres
+psql -d template1 -U postgres
+psql=> alter user ukkobox password 'pass123'
+createdb ukkobox -U postgres -O ukkobox -E UTF-8 -T template0
 psql ukkobox -U postgres -f tables/ukkobox.sql
 ```
 
