@@ -4,6 +4,24 @@ The objective of this project is purely didactic, it is an attempt to solve the 
 Simple RESTFUL API demo server written in Go (golang) in order to solve problems of recording, uploading and downloading files to disk and the Amazon cloud using S3, Google Cloud or any other cloud service that you want to implement, using postgresql as Database and token authentication.
 The services of amazon s3 were first implemented.
 
+## Used libraries:
+- https://github.com/lib/pq - Sql Database.
+- https://gopkg.in/gcfg.v1 - Text-based configuration files with "name=value" pairs grouped into sections (gcfg files).
+- https://github.com/aws/aws-sdk-go/aws - Package sdk Aws Amazon
+- https://github.com/gorilla/mux - Implements a request router and dispatcher for matching incoming requests
+
+---
+* [A small summary](#summary)
+* [Install](#install)
+* [Structure](#structure)
+* [Run](#runprogram)
+* [Examples Client](#examples-client)
+* [Register User](#register-user)
+* [Upload File](#upload-files)
+* [Download Files](#download-files)
+
+## A small summary operating system
+
 * [Gofileserver.go]
 
 This program is responsible for managing and controlling our APIS.
@@ -30,22 +48,6 @@ This program is responsible for monitoring the files on disk so they can be remo
 * [Goserversite.go]
 
 This program is just an attempt to create an interface to simulate what the client will see how the files on our platform are.
-
-## Used libraries:
-- https://github.com/lib/pq - Sql Database.
-- https://gopkg.in/gcfg.v1 - Text-based configuration files with "name=value" pairs grouped into sections (gcfg files).
-- https://github.com/aws/aws-sdk-go/aws - Package sdk Aws Amazon
-- https://github.com/gorilla/mux - Implements a request router and dispatcher for matching incoming requests
-
----
-
-* [Install](#install)
-* [Structure](#structure)
-* [Run](#runprogram)
-* [Examples Client](#examples-client)
-* [Register User](#register-user)
-* [Upload File](#upload-files)
-* [Download Files](#download-files)
 
 ## Install
 
