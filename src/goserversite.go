@@ -33,7 +33,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/mux"
 	sfconfig "github.com/jeffotoni/gofileserver/config"
 )
 
@@ -43,29 +42,29 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
-	flag.StringVar(&dir, "../views", ".", "directory to serve files from. Defaults to the current dir")
+	flag.StringVar(&dir, "views", "../views", "directory to serve files from. Defaults to the current dir")
 	flag.Parse()
-
-	r := mux.NewRouter()
 
 	// This will serve files under http://localhost:port
 
-	r.PathPrefix("/views/").Handler(
-		http.StripPrefix("/views/",
-			http.FileServer(http.Dir(dir))))
+	fmt.Println(dir)
+	fmt.Println("Start server port:" + cfg.Section.SitePort)
 
-	srv := &http.Server{
+	statics := http.FileServer(http.Dir(dir))
+	http.Handle("/", statics)
 
-		Handler: r,
-		Addr:    "127.0.0.1:" + cfg.Section.ServerPort,
+	sitef := &http.Server{
+
+		Handler: nil,
+		Addr:    "127.0.0.1:" + cfg.Section.SitePort,
 
 		// Good practice!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	fmt.Println("Start server port:" + cfg.Section.ServerPort)
+	log.Fatal(sitef.ListenAndServe())
 
-	log.Fatal(srv.ListenAndServe())
+	//log.Fatal(http.ListenAndServe(":"+cfg.Section.SitePort, nil))
 
 }

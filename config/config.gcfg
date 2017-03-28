@@ -32,4 +32,4 @@ pathlocal = ../uploads/
 serverport = 4001
 
 ;Port to server site
-siteport = 8080
+siteport = 9090
