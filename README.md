@@ -263,9 +263,20 @@ func main() {
 			}
 		})
 
-	// port in config.gcfg
+	
+	confsc := &http.Server{
 
-	log.Fatal(http.ListenAndServe(":"+cfg.Section.ServerPort, router))
+		Handler: router,
+		Addr:    "127.0.0.1:" + cfg.Section.ServerPort,
+
+		// Good idea, good live!!!
+
+		WriteTimeout: 10 * time.Second,
+		ReadTimeout:  10 * time.Second,
+	}
+
+	log.Fatal(confsc.ListenAndServe())
+
 }
 
 ```
