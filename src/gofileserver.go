@@ -28,10 +28,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	sfconfig "github.com/jeffotoni/gofileserver/config"
 	"github.com/jeffotoni/gofileserver/pkg/gofslib"
+	"github.com/jeffotoni/gofileserver/pkg/postgres/connection"
 )
 
 func main() {
@@ -40,16 +42,21 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
+	fmt.Println("Testing services")
+	fmt.Println("Postgres: ", connection.TestDb())
+	fmt.Println("Config: ", sfconfig.TestConfig())
+
 	fmt.Println("Server listening port : ", cfg.Section.ServerPort)
 	fmt.Println("Database", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
-	fmt.Println("Instance POST /register")
-	fmt.Println("Instance GET /token")
-	fmt.Println("Instance POST /upload")
-	fmt.Println("Instance GET /download")
+	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/register")
+	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/token")
+	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/upload")
+	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/download")
 
 	///create route
+
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
@@ -128,8 +135,17 @@ func main() {
 			}
 		})
 
-	// port in config.gcfg
+	confsc := &http.Server{
 
-	log.Fatal(http.ListenAndServe(":"+cfg.Section.ServerPort, router))
+		Handler: router,
+		Addr:    "127.0.0.1:" + cfg.Section.ServerPort,
+
+		// Good idea, good live!!!
+
+		WriteTimeout: 10 * time.Second,
+		ReadTimeout:  10 * time.Second,
+	}
+
+	log.Fatal(confsc.ListenAndServe())
 
 }

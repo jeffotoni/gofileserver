@@ -29,4 +29,4 @@ bucket = ukkobox
 pathlocal = ../uploads/
 
 ;Port to server
-serverport = 80
+serverport = 4001

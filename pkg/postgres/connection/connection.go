@@ -22,6 +22,7 @@ package connection
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	sfconfig "github.com/jeffotoni/gofileserver/config"
 	_ "github.com/lib/pq"
@@ -53,4 +54,27 @@ func Connect() *sql.DB {
 
 		return DBX
 	}
+}
+
+func TestDb() string {
+
+	db := Connect()
+	var returns string
+
+	if db.Ping() == nil {
+
+		returns = "ok"
+
+	} else {
+
+		returns = "erro"
+	}
+
+	if returns != "ok" {
+
+		fmt.Println("erro connection to database Check your settings: ", db.Ping())
+		os.Exit(1)
+	}
+
+	return returns
 }

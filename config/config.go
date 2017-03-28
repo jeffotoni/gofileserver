@@ -21,6 +21,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 
 	gcfg "gopkg.in/gcfg.v1"
 )
@@ -50,10 +51,36 @@ func GetConfig() *Config {
 
 	err := gcfg.ReadFileInto(&cfg, "../config/config.gcfg")
 
-	if cfg.Section.Ping == "ok" {
+	if cfg.Section.Ping != "ok" {
 
-		fmt.Println(err)
+		fmt.Println("Error reading file config.gcfg ", err)
 	}
 
 	return &cfg
+}
+
+func TestConfig() string {
+
+	var returns string
+
+	//path, _ := os.Getwd()
+
+	msgerr := "Error reading the config file!"
+
+	if cfg.Section.Ping == "ok" {
+
+		returns = "ok"
+
+	} else {
+
+		returns = "erro"
+	}
+
+	if returns != "ok" {
+
+		fmt.Println(msgerr)
+		os.Exit(1)
+	}
+
+	return returns
 }
