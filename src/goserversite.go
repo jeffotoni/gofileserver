@@ -34,27 +34,21 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	sfconfig "github.com/jeffotoni/gofileserver/config"
 )
 
 func main() {
 
-	// Opening an instance to serve the dynamic site, the project interface
-
-	// fs := http.FileServer(http.Dir("../views"))
-	// http.Handle("/", fs)
-
-	// log.Println("Listening 8080 site...")
-	// http.ListenAndServe(":8080", nil)
-	//
-
 	var dir string
+
+	cfg := sfconfig.GetConfig()
 
 	flag.StringVar(&dir, "../views", ".", "directory to serve files from. Defaults to the current dir")
 	flag.Parse()
 
 	r := mux.NewRouter()
 
-	// This will serve files under http://localhost:8080/static
+	// This will serve files under http://localhost:port
 
 	r.PathPrefix("/views/").Handler(
 		http.StripPrefix("/views/",
@@ -63,14 +57,14 @@ func main() {
 	srv := &http.Server{
 
 		Handler: r,
-		Addr:    "127.0.0.1:8081",
+		Addr:    "127.0.0.1:" + cfg.Section.ServerPort,
 
-		// Good practice: enforce timeouts for servers you create!
+		// Good practice!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	fmt.Println("Start server port: 8081")
+	fmt.Println("Start server port:" + cfg.Section.ServerPort)
 
 	log.Fatal(srv.ListenAndServe())
 

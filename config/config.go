@@ -40,6 +40,7 @@ type Config struct {
 		Bucket     string
 		PathLocal  string
 		ServerPort string
+		SitePort   string
 	}
 }
 

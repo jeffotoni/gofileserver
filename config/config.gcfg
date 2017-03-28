@@ -30,3 +30,6 @@ pathlocal = ../uploads/
 
 ;Port to server
 serverport = 4001
+
+;Port to server site
+siteport = 8080
