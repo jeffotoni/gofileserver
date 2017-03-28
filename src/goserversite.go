@@ -65,6 +65,4 @@ func main() {
 
 	log.Fatal(sitef.ListenAndServe())
 
-	//log.Fatal(http.ListenAndServe(":"+cfg.Section.SitePort, nil))
-
 }
