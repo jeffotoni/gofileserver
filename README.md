@@ -1,7 +1,7 @@
 # gofileserver
 The objective of this project is purely didactic, it is an attempt to solve the problem of competition and parallelism that the project will assume with uploading, reading and downloading files on disk and for the cloud.
 
-Simple RESTFUL API demo server written in Go (golang) in order to solve problems of recording, uploading and downloading files to disk and the Amazon cloud using S3, Google Cloud or any other cloud service that you want to implement, using postgresql as Database and token authentication.
+Simple RESTFUL API demo server written in Go (golang) in order to solve problems of recording, uploading and downloading files to disk and the Amazon cloud using S3 for various regions, Google Cloud or any other cloud service that you want to implement, using postgresql as Database and token authentication.
 The services of amazon s3 were first implemented.
 
 ## Used libraries:
