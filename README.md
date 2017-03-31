@@ -49,7 +49,12 @@ This program is responsible for monitoring the files on disk so they can be remo
 
 This program is just an attempt to create an interface to simulate what the client will see how the files on our platform are.
 
+
 ## Install
+
+```sh
+git clone https://github.com/jeffotoni/gofileserver
+```
 
 With a [correctly configured](https://golang.org/doc/code.html#Workspaces) Go toolchain:
 
@@ -160,7 +165,33 @@ Instance /token
 Instance /upload
 Instance /download
 
+OR New gofileserver 
+
+go run gofileserver2.go start
+
+Testing services
+Postgres:  ok
+Config:  ok
+Host: localhost
+Schema: http
+Server listening port :  4001
+Database ukkobox
+Database User:  ukkobox
+Instance POST  http://localhost:4001/register
+Instance GET   http://localhost:4001/token
+Instance POST  http://localhost:4001/upload
+Instance GET   http://localhost:4001/download
+Loaded service
+
 ```
+
+Stopping the server
+
+```go
+go run gofileserver2.go stop
+```
+
+Body of main function
 
 ```go
 go build gofileserver.go 
