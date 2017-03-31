@@ -41,6 +41,8 @@ type Config struct {
 		PathLocal  string
 		ServerPort string
 		SitePort   string
+		Host       string
+		Schema     string
 	}
 }
 

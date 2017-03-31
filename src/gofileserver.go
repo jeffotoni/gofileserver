@@ -135,6 +135,8 @@ func main() {
 			}
 		})
 
+	// http server conf
+
 	confsc := &http.Server{
 
 		Handler: router,

@@ -79,7 +79,8 @@ aws_access_key_id = AKIX1234567890
 aws_secret_access_key = MY-SECRET-KEY
 ```
 
-Creating postgresql database
+Creating postgresql database 
+[`Installing`] (Postgres http://www.postgresguide.com/setup/install.html)
 
 ```sh
 createuser ukkobox -U postgres

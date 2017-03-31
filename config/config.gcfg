@@ -29,6 +29,8 @@ bucket = ukkobox
 pathlocal = ../uploads/
 
 ;Port to server
+host = localhost
+schema = http
 serverport = 4001
 
 ;Server site static

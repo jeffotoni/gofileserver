@@ -36,6 +36,10 @@ import (
 	sfconfig "github.com/jeffotoni/gofileserver/config"
 )
 
+func cleanup() {
+	fmt.Println("cleanup e stop")
+}
+
 func main() {
 
 	var dir string
