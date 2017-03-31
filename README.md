@@ -282,6 +282,238 @@ func main() {
 
 ```
 
+```go
+go build gofileserver2.go 
+```
+
+Body of main function 
+
+```go
+
+/** Environment variables and keys */
+
+var (
+	confServer    *http.Server
+	AUTHORIZATION = `bc8c154ebabc6f3da724e9x5fef79238`
+	socketfileTmp = `gofileserver.red`
+	socketfile    = `gofileserver.lock`
+	keyCrypt      = `pKv9MQQIDAQABAmEApvlExjvPp0mYs/i`
+)
+
+func main() {
+
+	// Command line for start and stop server
+
+	if len(os.Args) > 1 {
+
+		command := os.Args[1]
+
+		if command != "" {
+
+			if command == "start" {
+
+				// Start server
+
+				startFileServer()
+
+			} else if command == "stop" {
+
+				// Stop server
+
+				fmt.Println("stop service...")
+				NewRequestGetStop()
+
+			} else {
+
+				fmt.Println("Usage: gofileserver {start|stop}")
+			}
+
+		} else {
+
+			command = ""
+			fmt.Println("No command given")
+		}
+	} else {
+
+		fmt.Println("Usage: gofileserver {start|stop}")
+	}
+}
+
+```
+
+Body of main function  startFileServer(){}
+
+```go
+
+func startFileServer() {
+
+	cfg := sfconfig.GetConfig()
+
+	fmt.Println("Testing services")
+	fmt.Println("Postgres: ", connection.TestDb())
+	fmt.Println("Config: ", sfconfig.TestConfig())
+
+	fmt.Println("Host: Localhost")
+	fmt.Println("Schema: http")
+	fmt.Println("Server listening port : ", cfg.Section.ServerPort)
+	fmt.Println("Database", cfg.Section.Database)
+	fmt.Println("Database User: ", cfg.Section.User)
+
+	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/register")
+	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/token")
+	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/upload")
+	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/download")
+	fmt.Println("Loaded service")
+
+	///create route
+
+	router := mux.NewRouter().StrictSlash(true)
+	//router.Host("Localhost")
+
+	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
+
+	router.
+		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "GET" {
+
+				HeaderAutorization := r.Header.Get("Authorization")
+
+				fmt.Println("HeaderAutorization: ", HeaderAutorization)
+
+				if HeaderAutorization == "" {
+
+					fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+				} else {
+
+					if HeaderAutorization == AUTHORIZATION {
+
+						vars := mux.Vars(r)
+						idStopServer := vars["id"]
+
+						fmt.Println("Id Token: ", idStopServer)
+						fmt.Println("Id TFile: ", ReadFile())
+
+						if idStopServer == ReadFile() {
+
+							fmt.Fprintln(w, "http ", 200, "ok stop")
+							StopListenAndServe()
+
+						} else {
+
+							fmt.Fprintln(w, "http ", 500, "Not authorized")
+						}
+
+					} else {
+
+						fmt.Fprintln(w, "http ", 500, "Not authorized")
+					}
+				}
+
+			} else if r.Method == "POST" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+			}
+		})
+
+	router.
+		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" {
+
+				gofslib.RegisterUserJson(w, r)
+
+			} else if r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+
+	router.
+		HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" {
+
+				//gofslib.GetTokenUser(w, r)
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
+
+			} else if r.Method == "GET" {
+
+				gofslib.GetTokenUser(w, r)
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+
+	router.
+		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" {
+
+				gofslib.UploadFileEasy(w, r)
+
+			} else if r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+
+	router.
+		HandleFunc("/download/{name}", func(w http.ResponseWriter, r *http.Request) {
+
+			pathFileLocal := "../msg/error-download.txt"
+
+			if r.Method == "GET" {
+
+				gofslib.DownloadFile(w, r)
+
+			} else if r.Method == "GET" {
+
+				http.ServeFile(w, r, pathFileLocal)
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+			} else {
+
+				http.ServeFile(w, r, pathFileLocal)
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+			}
+		})
+
+	confServer = &http.Server{
+
+		Handler: router,
+		Addr:    cfg.Section.Host + ":" + cfg.Section.ServerPort,
+
+		// Good idea, good live!!!
+
+		WriteTimeout: 10 * time.Second,
+		ReadTimeout:  10 * time.Second,
+	}
+
+	PASS_URL_MD5 := fcrypt.CreateTokenStrong()
+	WriteFile(PASS_URL_MD5)
+
+	log.Fatal(confServer.ListenAndServe())
+}
+
+```
+
 ## Examples client
 
 Register user and receive access key 

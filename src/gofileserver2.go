@@ -43,10 +43,10 @@ import (
 
 var (
 	confServer    *http.Server
-	AUTHORIZATION = `bc8ca54ebabc6f3da724e9x5fef79238`
+	AUTHORIZATION = `bc8c154ebabc6f3da724e9x5fef79238`
 	socketfileTmp = `gofileserver.red`
 	socketfile    = `gofileserver.lock`
-	keyCrypt      = `pKv3MQQIDAQABAmEApvlExjvPp0mYs/i`
+	keyCrypt      = `pKv9MQQIDAQABAmEApvlExjvPp0mYs/i`
 )
 
 func main() {
