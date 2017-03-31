@@ -94,7 +94,6 @@ func StopListenAndServe() {
 	confServer.Close()
 	confServer.Shutdown(nil)
 	RemoveFile(socketfile)
-
 }
 
 func startFileServer() {

@@ -514,6 +514,143 @@ func startFileServer() {
 
 ```
 
+Body of main function  HandleFunc /stop/idEncrypted
+
+```go
+router.
+		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "GET" {
+
+				HeaderAutorization := r.Header.Get("Authorization")
+
+				fmt.Println("HeaderAutorization: ", HeaderAutorization)
+
+				if HeaderAutorization == "" {
+
+					fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+				} else {
+
+					if HeaderAutorization == AUTHORIZATION {
+
+						vars := mux.Vars(r)
+						idStopServer := vars["id"]
+
+						fmt.Println("Id Token: ", idStopServer)
+						fmt.Println("Id TFile: ", ReadFile())
+
+						if idStopServer == ReadFile() {
+
+							fmt.Fprintln(w, "http ", 200, "ok stop")
+							StopListenAndServe()
+
+						} else {
+
+							fmt.Fprintln(w, "http ", 500, "Not authorized")
+						}
+
+					} else {
+
+						fmt.Fprintln(w, "http ", 500, "Not authorized")
+					}
+				}
+
+			} else if r.Method == "POST" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized")
+			}
+		})
+
+```
+
+Body of main function  StopListenAndServe
+
+```go
+func StopListenAndServe() {
+
+	fmt.Println("stopping Server File...")
+	confServer.Close()
+	confServer.Shutdown(nil)
+	RemoveFile(socketfile)
+}
+```
+
+Body of main function  [WriteFileCrypt Encrypting the contents of the file]
+
+```go
+func WriteFileCrypt(sname string) {
+
+	// get key
+	key := []byte(keyCrypt) // 32 bytes
+
+	file, _ := os.Open(sname) // For read access.
+
+	fi, _ := file.Stat()
+	data := make([]byte, 16*fi.Size())
+	count, _ := file.Read(data)
+
+	file_cry, _ := os.Create(socketfile)
+	defer file_cry.Close()
+
+	ciphertext, _ := fcrypt.Encrypt(key, data[:count])
+	file_cry.Write(ciphertext)
+}
+
+```
+
+Body of main function  [NewRequestGetStop Encrypts the id of the URL]
+
+```go
+
+/** [NewRequestGetStop This method will stop the server, it makes a Request Get for itself telling the server to stop] */
+
+func NewRequestGetStop() {
+
+	cfg := sfconfig.GetConfig()
+
+	//Read generated key to generate the url
+
+	PASS_URL_MD5 := ReadFile()
+
+	if PASS_URL_MD5 != "" {
+
+		// Create url to trigger a GET for us restful
+
+		URL_STOP := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/stop/" + PASS_URL_MD5
+
+		// Starting our instance to send a NewRequest to our restful
+
+		client := &http.Client{}
+		r, err := http.NewRequest("GET", URL_STOP, nil)
+		if err != nil {
+
+			fmt.Sprint(err)
+			os.Exit(1)
+		}
+
+		r.Header.Add("Authorization", AUTHORIZATION)
+		r.Header.Add("Accept", "application/text-plain")
+		_, errx := client.Do(r)
+		if errx != nil {
+
+			log.Print(errx)
+			os.Exit(1)
+		}
+
+	} else {
+
+		fmt.Println("NewRequestGetStop Error URL ")
+		os.Exit(1)
+	}
+}
+
+```
+
 ## Examples client
 
 Register user and receive access key 
