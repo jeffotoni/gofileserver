@@ -4,6 +4,7 @@ The objective of this project is purely didactic, it is an attempt to solve the 
 Simple RESTFUL API demo server written in Go (golang) in order to solve problems of recording, uploading and downloading files to disk and the Amazon cloud using S3 for various regions, Google Cloud or any other cloud service that you want to implement, using postgresql as Database and token authentication.
 The services of amazon s3 were first implemented.
 
+
 ## Used libraries:
 - https://github.com/lib/pq - Sql Database.
 - https://gopkg.in/gcfg.v1 - Text-based configuration files with "name=value" pairs grouped into sections (gcfg files).
@@ -191,10 +192,11 @@ Stopping the server
 go run gofileserver2.go stop
 ```
 
-Body of main function
+Compiling gofileserver or gofileserver2
 
 ```go
 go build gofileserver.go 
+go build gofileserver2.go 
 ```
 
 Body of main function
