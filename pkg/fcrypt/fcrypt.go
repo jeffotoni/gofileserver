@@ -12,7 +12,7 @@
 
 *
 *
-* projeto server-upload / donwload / register user
+* project server-upload / donwload / register user
 *
 * @package     libfileserver
 * @author      jeffotoni

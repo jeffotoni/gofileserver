@@ -12,7 +12,7 @@
 
 *
 *
-* projeto ukkobox
+* project ukkobox
 *
 * @package     /gofileupload
 * @author      jeffotoni

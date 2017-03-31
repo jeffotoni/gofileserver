@@ -12,7 +12,7 @@
 
 *
 *
-* projeto server-upload / donwload / register user
+* project server-upload / donwload / register user
 *
 * @package     main
 * @author      jeffotoni
@@ -104,16 +104,21 @@ func startFileServer() {
 	fmt.Println("Postgres: ", connection.TestDb())
 	fmt.Println("Config: ", sfconfig.TestConfig())
 
-	fmt.Println("Host: Localhost")
+	fmt.Println("Host: " + cfg.Section.Host)
 	fmt.Println("Schema: http")
 	fmt.Println("Server listening port : ", cfg.Section.ServerPort)
 	fmt.Println("Database", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
-	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/register")
-	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/token")
-	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/upload")
-	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/download")
+	registerUrl := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/register"
+	tokenUrl := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/token"
+	uploadUrl := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/upload"
+	downloadUrl := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/download"
+
+	fmt.Println("Instance POST ", registerUrl)
+	fmt.Println("Instance GET  ", tokenUrl)
+	fmt.Println("Instance POST ", uploadUrl)
+	fmt.Println("Instance GET  ", downloadUrl)
 	fmt.Println("Loaded service")
 
 	///create route
