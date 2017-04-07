@@ -46,7 +46,7 @@ func main() {
 
 	cfg := sfconfig.GetConfig()
 
-	flag.StringVar(&dir, "views", "../views", "directory to serve files from. Defaults to the current dir")
+	flag.StringVar(&dir, "views", "views", "directory to serve files from. Defaults to the current dir")
 	flag.Parse()
 
 	// This will serve files under http://localhost:port

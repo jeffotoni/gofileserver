@@ -77,7 +77,7 @@ func StartFileServer() {
 	router := mux.NewRouter().StrictSlash(true)
 	//router.Host("Localhost")
 
-	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
+	router.Handle("/", http.FileServer(http.Dir("dirmsg")))
 
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
@@ -183,7 +183,7 @@ func StartFileServer() {
 	router.
 		HandleFunc("/download/{name}", func(w http.ResponseWriter, r *http.Request) {
 
-			pathFileLocal := "../msg/error-download.txt"
+			pathFileLocal := "msg/error-download.txt"
 
 			if r.Method == "GET" {
 
