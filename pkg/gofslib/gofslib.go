@@ -258,7 +258,7 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 
 				file, handler, errf := r.FormFile("fileupload")
 
-				fmt.Println("error: ", errf)
+				//fmt.Println("error: ", errf)
 
 				if errf != nil {
 					color.Red("Error big file, try again!")

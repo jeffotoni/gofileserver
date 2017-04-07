@@ -29,7 +29,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/fatih/color"
 	"github.com/gorilla/mux"
@@ -209,9 +208,8 @@ func StartFileServer() {
 		Addr:    cfg.Section.Host + ":" + cfg.Section.ServerPort,
 
 		// Good idea, good live!!!
-
-		WriteTimeout: 10 * time.Second,
-		ReadTimeout:  10 * time.Second,
+		//WriteTimeout: 10 * time.Second,
+		//ReadTimeout:  10 * time.Second,
 	}
 
 	PASS_URL_MD5 := fcrypt.CreateTokenStrong()
