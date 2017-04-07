@@ -70,7 +70,7 @@ func DownloadFile(w http.ResponseWriter, r *http.Request) {
 
 				acessekey := autorization
 
-				pathFile := cfg.Section.PathLocal + acessekey + "/" + nameFile
+				pathFile := cfg.Section.PathLocal + "/" + acessekey + "/" + nameFile
 
 				if gcheck.FileExists(pathFile) {
 
@@ -259,11 +259,17 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 				defer file.Close()
 
 				///create dir to key
-				pathUpKeyUser := cfg.Section.PathLocal + acessekey
+				pathUpKeyUser := cfg.Section.PathLocal + "/" + acessekey
 
-				os.MkdirAll(pathUpKeyUser, 0777)
+				existPath, err = os.Stat(cfg.Section.PathLocal)
 
-				pathUserAcess := cfg.Section.PathLocal + acessekey + "/" + handler.Filename
+				if existPath == nil {
+
+					// create path
+					os.MkdirAll(pathUpKeyUser, 0777)
+				}
+
+				pathUserAcess := cfg.Section.PathLocal + "/" + acessekey + "/" + handler.Filename
 
 				// copy file and write
 
