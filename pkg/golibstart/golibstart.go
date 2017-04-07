@@ -150,8 +150,8 @@ func StartFileServer() {
 
 			if r.Method == "POST" {
 
-				//gofslib.GetTokenUser(w, r)
-				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
+				gofslib.GetTokenUser(w, r)
+				//fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
 
 			} else if r.Method == "GET" {
 
@@ -166,7 +166,11 @@ func StartFileServer() {
 	router.
 		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == "PUT" {
+
+				gofslib.UploadFileEasy(w, r)
+
+			} else if r.Method == "POST" {
 
 				gofslib.UploadFileEasy(w, r)
 
