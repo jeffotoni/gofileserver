@@ -273,7 +273,7 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 
 				// copy file and write
 
-				f, _ := os.OpenFile(pathUserAcess, os.O_WRONLY|os.O_CREATE, 0666)
+				f, _ := os.OpenFile(pathUserAcess, os.O_WRONLY|os.O_CREATE, 0777)
 				defer f.Close()
 				n, _ := io.Copy(f, file)
 
