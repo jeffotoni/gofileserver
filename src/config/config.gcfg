@@ -1,0 +1,41 @@
+#
+# @autor jeffotoni
+# @package config
+# @date 26/03/2017
+# This is a configuration config system
+# Lines database postgres config
+#
+
+[section]
+; config datadbase postgresql
+ping		= ok
+domain 		= localhost
+port 		= 5432
+database	= ukkobox # database name
+user		= ukkobox # database user
+password	= pass123 # password
+
+; config system
+process		= 2
+
+; config upload
+uploadMax	= 1
+uploadSize	= 500 # Mb size in mega
+
+; config cloud amazon
+bucket = ukkobox
+
+; config path local
+pathlocal = uploads
+
+;By placing empty it 
+;can receive request from any server
+host =  
+serverHost = localhost  
+schema = http
+;Port to server
+serverport = 4001
+
+;Server site static
+;Port to server site
+siteport = 9090
