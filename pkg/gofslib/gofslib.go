@@ -40,6 +40,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/fatih/color"
 	"github.com/gorilla/mux"
 	sfconfig "github.com/jeffotoni/gofileserver/config"
 	"github.com/jeffotoni/gofileserver/pkg/fcrypt"
@@ -255,7 +256,16 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 
 				// field upload
 
-				file, handler, _ := r.FormFile("fileupload")
+				file, handler, errf := r.FormFile("fileupload")
+
+				fmt.Println("error: ", errf)
+
+				if errf != nil {
+					color.Red("Error big file, try again!")
+					http.Error(w, "Error parsing uploaded file: "+errf.Error(), http.StatusBadRequest)
+					return
+				}
+
 				defer file.Close()
 
 				///create dir to key
