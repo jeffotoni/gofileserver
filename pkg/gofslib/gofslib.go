@@ -261,7 +261,7 @@ func UploadFileEasy(w http.ResponseWriter, r *http.Request) {
 				///create dir to key
 				pathUpKeyUser := cfg.Section.PathLocal + "/" + acessekey
 
-				existPath, err = os.Stat(cfg.Section.PathLocal)
+				existPath, _ := os.Stat(pathUpKeyUser)
 
 				if existPath == nil {
 
