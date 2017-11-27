@@ -226,11 +226,11 @@ func main() {
 	router.
 		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				gofslib.RegisterUserJson(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
@@ -243,12 +243,12 @@ func main() {
 	router.
 		HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				//gofslib.GetTokenUser(w, r)
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				gofslib.GetTokenUser(w, r)
 
@@ -261,11 +261,11 @@ func main() {
 	router.
 		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				gofslib.UploadFileEasy(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
@@ -280,11 +280,11 @@ func main() {
 
 			pathFileLocal := "../msg/error-download.txt"
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				gofslib.DownloadFile(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				http.ServeFile(w, r, pathFileLocal)
 
@@ -404,11 +404,24 @@ func startFileServer() {
 	//router.Host("Localhost")
 
 	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
+	
+	router.
+		HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 
+			if r.Method == http.MethodPost || r.Method == http.MethodGet {
+
+				fmt.Fprintln(w, "http ", 200, `{"msg":"pong"}`)
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+		
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				HeaderAutorization := r.Header.Get("Authorization")
 
@@ -444,7 +457,7 @@ func startFileServer() {
 					}
 				}
 
-			} else if r.Method == "POST" {
+			} else if r.Method == http.MethodPost {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized")
 
@@ -457,11 +470,11 @@ func startFileServer() {
 	router.
 		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				gofslib.RegisterUserJson(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
@@ -474,12 +487,12 @@ func startFileServer() {
 	router.
 		HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				//gofslib.GetTokenUser(w, r)
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				gofslib.GetTokenUser(w, r)
 
@@ -492,11 +505,11 @@ func startFileServer() {
 	router.
 		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				gofslib.UploadFileEasy(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
@@ -511,11 +524,11 @@ func startFileServer() {
 
 			pathFileLocal := "../msg/error-download.txt"
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				gofslib.DownloadFile(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				http.ServeFile(w, r, pathFileLocal)
 
@@ -553,7 +566,7 @@ Body of main function  HandleFunc /stop/idEncrypted
 router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				HeaderAutorization := r.Header.Get("Authorization")
 
@@ -589,7 +602,7 @@ router.
 					}
 				}
 
-			} else if r.Method == "POST" {
+			} else if r.Method == http.MethodPost {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized")
 
