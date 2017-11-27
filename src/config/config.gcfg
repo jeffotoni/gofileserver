@@ -13,7 +13,7 @@ domain 		= localhost
 port 		= 5432
 database	= ukkobox # database name
 user		= ukkobox # database user
-password	= pass123 # password
+password	= linux2017 # password
 
 ; config system
 process		= 2
@@ -28,10 +28,12 @@ bucket = ukkobox
 ; config path local
 pathlocal = uploads
 
-;Port to server
-host = 
-serverHost = localhost
+;By placing empty it 
+;can receive request from any server
+host =  
+serverHost = localhost  
 schema = http
+;Port to server
 serverport = 4001
 
 ;Server site static

@@ -50,16 +50,43 @@ func main() {
 	fmt.Println("Database", cfg.Section.Database)
 	fmt.Println("Database User: ", cfg.Section.User)
 
-	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/register")
-	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/token")
-	fmt.Println("Instance POST http://localhost:" + cfg.Section.ServerPort + "/upload")
-	fmt.Println("Instance GET  http://localhost:" + cfg.Section.ServerPort + "/download")
+	serverHost := cfg.Section.serverHost
+	schema := cfg.Section.schema
+
+	ping := schema + "://" + serverHost + ":" + cfg.Section.ServerPort + "/ping"
+	register := schema + "://" + serverHost + ":" + cfg.Section.ServerPort + "/register"
+	token := schema + "://" + serverHost + ":" + cfg.Section.ServerPort + "/token"
+	upload := schema + "://" + serverHost + ":" + cfg.Section.ServerPort + "/upload"
+	download := schema + "://" + serverHost + ":" + cfg.Section.ServerPort + "/download"
+
+	fmt.Println("[Instance POST] " + ping)
+	fmt.Println("[Instance POST] " + register)
+	fmt.Println("[Instance GET] " + token)
+	fmt.Println("[Instance POST] " + upload)
+	fmt.Println("[Instance GET] " + download)
 
 	///create route
 
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
+
+	router.
+		HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == "POST" || r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 200, `{"msg":"pong"}`)
+
+			} else if r.Method == "GET" {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
 
 	router.
 		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {

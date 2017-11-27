@@ -54,11 +54,13 @@ func StartFileServer() {
 	color.Cyan("Upload: " + sfconfig.TestConfigUpload())
 	color.Yellow("successfully...")
 
+	ping := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/ping"
 	registerUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/register"
 	tokenUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/token"
 	uploadUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/upload"
 	downloadUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/download"
 
+	color.Red("POST/GET " + ping)
 	color.Red("POST " + registerUrl)
 	color.Red("GET  " + tokenUrl)
 	color.Red("POST " + uploadUrl)
@@ -77,7 +79,8 @@ func StartFileServer() {
 	router := mux.NewRouter().StrictSlash(true)
 	//router.Host("Localhost")
 
-	router.Handle("/", http.FileServer(http.Dir("dirmsg")))
+	// router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
+	router.Handle("/", http.FileServer(http.Dir("../views")))
 
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
@@ -129,13 +132,26 @@ func StartFileServer() {
 		})
 
 	router.
+		HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method == http.MethodPost || r.Method == http.MethodGet {
+
+				fmt.Fprintln(w, "http ", 200, `{"msg":"pong"}`)
+
+			} else {
+
+				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
+			}
+		})
+
+	router.
 		HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" {
+			if r.Method == http.MethodPost {
 
 				gofslib.RegisterUserJson(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodPost {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
