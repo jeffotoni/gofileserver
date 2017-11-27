@@ -74,7 +74,7 @@ func main() {
 	router.
 		HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "POST" || r.Method == "GET" {
+			if r.Method == http.MethodPost || r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 200, `{"msg":"pong"}`)
 

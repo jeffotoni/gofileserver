@@ -210,7 +210,7 @@ domain 		= localhost
 port 		= 5432
 database	= ukkobox # database name
 user		= ukkobox # database user
-password	= linux2017 # password
+password	= pass123 # password
 
 ; config system
 process		= 2
