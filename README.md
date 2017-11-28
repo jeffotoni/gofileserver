@@ -723,7 +723,9 @@ Register user and receive access key
 Using Curl - Sending in json format
 
 ```
-curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/register
+curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' \
+-H "Content-Type:application/json" \
+http://localhost:4001/register
 
 ```
 
