@@ -54,17 +54,20 @@ func StartFileServer() {
 	color.Cyan("Upload: " + sfconfig.TestConfigUpload())
 	color.Yellow("successfully...")
 
+	htmlviews := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + ""
+
 	ping := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/ping"
 	registerUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/register"
 	tokenUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/token"
 	uploadUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/upload"
 	downloadUrl := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/download"
 
-	color.Red("POST/GET " + ping)
-	color.Red("POST " + registerUrl)
-	color.Red("GET  " + tokenUrl)
-	color.Red("POST " + uploadUrl)
-	color.Red("GET  " + downloadUrl)
+	color.Red("[page html] " + htmlviews)
+	color.Red("[POST/GET] " + ping)
+	color.Red("[POST] " + registerUrl)
+	color.Red("[GET] " + tokenUrl)
+	color.Red("[POST] " + uploadUrl)
+	color.Red("[GET]  " + downloadUrl)
 
 	color.Yellow("Starting service...")
 	color.Green("Host: " + cfg.Section.ServerHost)
