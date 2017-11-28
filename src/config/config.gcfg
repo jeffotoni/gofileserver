@@ -40,4 +40,7 @@ serverport = 4001
 ;Port to server site
 siteport = 9090
 
+;Server stop
+;now it is possible to choose 
+;the stop: file or env
 serverstop = env
