@@ -701,11 +701,22 @@ func NewRequestGetStop() {
 
 Testing if the server is online with ping 
 
-Using Curl POST or GET
+Using Curl POST or GET with /ping
+
+```sh
+
+curl -X POST http://localhost:4001/ping
 
 ```
-curl -X POST http://localhost:4001/ping
+
+return
+
+```sh
+
+http  200 {"msg":"pong"}
+
 ```
+
 
 Register user and receive access key 
 
@@ -713,28 +724,33 @@ Using Curl - Sending in json format
 
 ```
 curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/register
+
 ```
 
 Using Curl - Access token
 
 ```
 curl -X GET --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/token
+
 ```
 
 Uploading with Authorization
 
 ```
 curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+
 ```
 
 Uploading with acesskey
 
 ```
 curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
+
 ```
 
 Download only Authorization
 
 ```
 curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:4001/download/nameFile.bz2
+
 ```
