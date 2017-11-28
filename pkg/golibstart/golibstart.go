@@ -77,10 +77,9 @@ func StartFileServer() {
 	///create route
 
 	router := mux.NewRouter().StrictSlash(true)
-	//router.Host("Localhost")
 
-	// router.Handle("/", http.FileServer(http.Dir("../dirmsg")))
-	router.Handle("/", http.FileServer(http.Dir("../views")))
+	//router.Host("Localhost")
+	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../views/"))))
 
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
