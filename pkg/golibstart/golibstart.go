@@ -81,13 +81,10 @@ func StartFileServer() {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	//router.Host("Localhost")
-	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../views/"))))
-
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				HeaderAutorization := r.Header.Get("Authorization")
 
@@ -114,7 +111,7 @@ func StartFileServer() {
 
 						} else {
 
-							fmt.Fprintln(w, "http ", 500, "Not authorized")
+							fmt.Fprintln(w, "http ", 500, "Not authorized...")
 						}
 
 					} else {
@@ -123,7 +120,7 @@ func StartFileServer() {
 					}
 				}
 
-			} else if r.Method == "POST" {
+			} else if r.Method == http.MethodPost {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized")
 
@@ -171,7 +168,7 @@ func StartFileServer() {
 				gofslib.GetTokenUser(w, r)
 				//fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method GET")
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				gofslib.GetTokenUser(w, r)
 
@@ -184,15 +181,15 @@ func StartFileServer() {
 	router.
 		HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 
-			if r.Method == "PUT" {
+			if r.Method == http.MethodPut {
 
 				gofslib.UploadFileEasy(w, r)
 
-			} else if r.Method == "POST" {
+			} else if r.Method == http.MethodPost {
 
 				gofslib.UploadFileEasy(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 
@@ -207,11 +204,11 @@ func StartFileServer() {
 
 			pathFileLocal := "msg/error-download.txt"
 
-			if r.Method == "GET" {
+			if r.Method == http.MethodGet {
 
 				gofslib.DownloadFile(w, r)
 
-			} else if r.Method == "GET" {
+			} else if r.Method == http.MethodGet {
 
 				http.ServeFile(w, r, pathFileLocal)
 
@@ -223,6 +220,9 @@ func StartFileServer() {
 				fmt.Fprintln(w, "http ", 500, "Not authorized")
 			}
 		})
+
+	//router.Host("Localhost")
+	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../views/"))))
 
 	confServer = &http.Server{
 
@@ -262,8 +262,9 @@ func NewRequestGetStop() {
 
 		// Create url to trigger a GET for us restful
 
-		URL_STOP := cfg.Section.Schema + "://" + cfg.Section.Host + ":" + cfg.Section.ServerPort + "/stop/" + PASS_URL_MD5
+		URL_STOP := cfg.Section.Schema + "://" + cfg.Section.ServerHost + ":" + cfg.Section.ServerPort + "/stop/" + PASS_URL_MD5
 
+		// fmt.Println(URL_STOP)
 		// Starting our instance to send a NewRequest to our restful
 
 		client := &http.Client{}
@@ -271,6 +272,7 @@ func NewRequestGetStop() {
 		if err != nil {
 
 			fmt.Sprint(err)
+			fmt.Println(err)
 			os.Exit(1)
 		}
 
@@ -280,6 +282,7 @@ func NewRequestGetStop() {
 		if errx != nil {
 
 			log.Print(errx)
+			fmt.Println(errx)
 			os.Exit(1)
 		}
 

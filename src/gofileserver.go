@@ -78,10 +78,6 @@ func main() {
 
 				fmt.Fprintln(w, "http ", 200, `{"msg":"pong"}`)
 
-			} else if r.Method == "GET" {
-
-				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
-
 			} else {
 
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
