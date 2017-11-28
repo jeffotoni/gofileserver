@@ -103,15 +103,35 @@ func StartFileServer() {
 
 						fmt.Println("Id Token: ", idStopServer)
 						fmt.Println("Id TFile: ", gofile.ReadFile())
+						fmt.Println("Id Env: ", os.Getenv("GOSTOP"))
 
-						if idStopServer == gofile.ReadFile() {
+						if cfg.Section.Serverstop == "env" {
 
-							fmt.Fprintln(w, "http ", 200, "ok stop")
-							StopListenAndServe()
+							// now it is possible to choose the stop,
+							// file or env
+							if idStopServer == os.Getenv("GOSTOP") {
+
+								fmt.Fprintln(w, "http ", 200, "ok stop")
+								StopListenAndServe("ENV...")
+
+							} else {
+
+								fmt.Fprintln(w, "http ", 500, "Not authorized...")
+							}
 
 						} else {
 
-							fmt.Fprintln(w, "http ", 500, "Not authorized...")
+							// now it is possible to choose the stop,
+							// file or env
+							if idStopServer == gofile.ReadFile() {
+
+								fmt.Fprintln(w, "http ", 200, "ok stop")
+								StopListenAndServe("File")
+
+							} else {
+
+								fmt.Fprintln(w, "http ", 500, "Not authorized...")
+							}
 						}
 
 					} else {
@@ -236,13 +256,15 @@ func StartFileServer() {
 
 	PASS_URL_MD5 := fcrypt.CreateTokenStrong()
 	gofile.WriteFile(PASS_URL_MD5)
+	os.Setenv("GOSTOP", PASS_URL_MD5)
 
 	log.Fatal(confServer.ListenAndServe())
 }
 
-func StopListenAndServe() {
+// stop server with file cripty or ENV
+func StopListenAndServe(msg string) {
 
-	fmt.Println("stopping Server File...")
+	fmt.Println("stopping Server " + msg)
 	confServer.Close()
 	confServer.Shutdown(nil)
 	gofile.RemoveFile(gofile.Socketfile)

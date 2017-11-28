@@ -39,3 +39,5 @@ serverport = 4001
 ;Server site static
 ;Port to server site
 siteport = 9090
+
+serverstop = env

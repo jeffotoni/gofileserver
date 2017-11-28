@@ -53,6 +53,7 @@ type Config struct {
 		Host       string
 		Schema     string
 		ServerHost string
+		Serverstop string
 	}
 }
 
@@ -236,4 +237,9 @@ serverport = 4001
 ;Server site static
 ;Port to server site
 siteport = 9090
+
+;Server stop
+;now it is possible to choose 
+;the stop: file or env
+serverstop = env
 `
