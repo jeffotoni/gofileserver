@@ -417,7 +417,7 @@ func startFileServer() {
 				fmt.Fprintln(w, "http ", 500, "Not authorized / Allowed method POST")
 			}
 		})
-		
+
 	router.
 		HandleFunc("/stop/{id}", func(w http.ResponseWriter, r *http.Request) {
 
@@ -699,34 +699,42 @@ func NewRequestGetStop() {
 
 ## Examples client
 
+Testing if the server is online with ping 
+
+Using Curl POST or GET
+
+```
+curl -X POST http://localhost:4001/ping
+```
+
 Register user and receive access key 
 
 Using Curl - Sending in json format
 
 ```
-curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/register
+curl -X POST --data '{"name":"jeff","email":"mail@your.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/register
 ```
 
 Using Curl - Access token
 
 ```
-curl -X GET --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:80/token
+curl -X GET --data '{"email":"jeff1@gmail.com","password":"321"}' -H "Content-Type:application/json" http://localhost:4001/token
 ```
 
 Uploading with Authorization
 
 ```
-curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:80/upload
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
 ```
 
 Uploading with acesskey
 
 ```
-curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:80/upload
+curl -F 'acesskey:bc8ca54ebabc6f3da724e923fef79238' --form fileupload=@nameFile.bz2 http://localhost:4001/upload
 ```
 
 Download only Authorization
 
 ```
-curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:80/download/nameFile.bz2
+curl -H 'Authorization:bc8ca54ebabc6f3da724e923fef79238' -O http://localhost:4001/download/nameFile.bz2
 ```
